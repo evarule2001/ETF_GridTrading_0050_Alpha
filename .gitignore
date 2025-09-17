@@ -1,0 +1,33 @@
+# === Python 基本檔案 ===
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# === 虛擬環境 ===
+venv/
+.venv/
+
+# === VS Code 設定（只保留你需要的 settings.json）===
+.vscode/* 
+!.vscode/settings.json
+
+# === 資料與紀錄檔 ===
+data/*.csv
+data/*.xlsx
+data/*.json
+log/*.log
+log/*.txt
+
+# 但如果有「必要的範例檔」要保留，可以用 ! 反向規則
+!data/README.md
+!log/README.md
+
+# === 系統檔案 ===
+.DS_Store
+Thumbs.db
+
+# === Jupyter 相關 (如果會用到 notebook) ===
+.ipynb_checkpoints/
+*.ipynb
