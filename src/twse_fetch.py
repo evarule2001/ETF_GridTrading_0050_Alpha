@@ -7,8 +7,9 @@ from datetime import datetime
 
 # 📁 路徑設定
 DATA_DIR = "data"
+DATA_DIR2 = "logs"
 CSV_FILE = os.path.join(DATA_DIR, "0050_twse.csv")
-LOG_FILE = os.path.join(DATA_DIR, "update.log")
+LOG_FILE = os.path.join(DATA_DIR2, "update.log")
 
 # 📝 設定 logging（避免亂碼，用 utf-8-sig）
 log_handler = logging.FileHandler(LOG_FILE, mode="a", encoding="utf-8-sig")
