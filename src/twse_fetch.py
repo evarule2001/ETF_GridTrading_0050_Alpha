@@ -7,7 +7,7 @@ from datetime import datetime
 
 # 📁 路徑設定
 DATA_DIR = "data"
-DATA_DIR2 = "logs"
+DATA_DIR2 = "log"
 CSV_FILE = os.path.join(DATA_DIR, "0050_twse.csv")
 LOG_FILE = os.path.join(DATA_DIR2, "update.log")
 
