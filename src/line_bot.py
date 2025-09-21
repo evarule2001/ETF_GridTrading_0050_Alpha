@@ -1,5 +1,6 @@
 import requests
 import os
+import logging
 from dotenv import load_dotenv
 
 # 載入 .env
@@ -12,9 +13,11 @@ USER_ID = os.getenv("LINE_USER_ID")
 def send_line(message: str, to: str = None):
     """發送訊息到 LINE Bot"""
     if not CHANNEL_ACCESS_TOKEN:
-        raise ValueError("❌ LINE_CHANNEL_TOKEN not found in environment variables")
+        logging.error("❌ LINE_CHANNEL_TOKEN not found in environment variables")
+        return 400, "Missing LINE_CHANNEL_TOKEN"
     if not USER_ID and not to:
-        raise ValueError("❌ LINE_USER_ID not found in environment variables")
+        logging.error("❌ LINE_USER_ID not found in environment variables")
+        return 400, "Missing LINE_USER_ID"
 
     url = "https://api.line.me/v2/bot/message/push"
     headers = {
@@ -27,5 +30,11 @@ def send_line(message: str, to: str = None):
         "messages": [{"type": "text", "text": message}],
     }
 
-    r = requests.post(url, headers=headers, json=payload)
-    return r.status_code, r.text
+    try:
+        r = requests.post(url, headers=headers, json=payload, timeout=10)
+        if r.status_code != 200:
+            logging.error(f"❌ LINE API Error {r.status_code}: {r.text}")
+        return r.status_code, r.text
+    except Exception as e:
+        logging.error(f"❌ Failed to send LINE message: {e}")
+        return 500, str(e)

@@ -2,6 +2,7 @@ import pandas as pd
 import os
 import logging
 from datetime import datetime
+from line_bot import send_line
 
 # === 檔案路徑 ===
 DATA_DIR = "data"
@@ -121,3 +122,9 @@ if __name__ == "__main__":
 
     signals.to_csv(SIGNAL_FILE, index=False, encoding="utf-8-sig")
     print(f"✅ 今日訊號已存到 {SIGNAL_FILE}")
+
+# 發送 LINE 訊息
+msg = f"📈 ETF0050 策略通知\n價格 {latest_price:.2f}, 總資產 {total_value:.2f}, 持倉比例 {ratio:.2%}\n建議動作: {action} {shares} 股\n下一買入價 {next_buy_price}, 股數 {next_buy_shares}\n下一賣出價 {next_sell_price}, 股數 {next_sell_shares}"
+
+status, resp = send_line(msg)
+print(f"已推送訊息到 LINE ({status}) {resp}")
